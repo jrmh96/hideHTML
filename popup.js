@@ -52,8 +52,8 @@ chrome.storage.sync.get("block", async ({ block }) => {
 // The body of this function will be executed as a content script inside the
 // current page
 function setBlock() {
-    originalBlock = document.getElementById("hot-network-questions"); // this part works
-    if(originalBlock) { originalBlock.style.display = 'none'; } // do we need to refresh?
+    originalBlock = document.getElementById("hot-network-questions");
+    if(originalBlock) { originalBlock.style.display = 'none'; }
 }
 
 function resetBlock() {
