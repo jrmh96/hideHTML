@@ -32,11 +32,20 @@ changeColor.addEventListener("click", async () => {
 });
 
 // redundant - used for setting up before first click
-chrome.storage.sync.get("block", ({ block }) => {
+chrome.storage.sync.get("block", async ({ block }) => {
+  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if(block) {
     changeColor.style.backgroundColor = "#e8453c";
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      function: setBlock,
+    });
   } else {
     changeColor.style.backgroundColor = "#3aa757";
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      function: resetBlock,
+    });
   }
 });
   
