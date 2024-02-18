@@ -8,13 +8,13 @@ let changeColor = document.getElementById("changeColor");
 // When the button is clicked, change block status
 changeColor.addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  
+
   chrome.storage.sync.get("block", data => {
     const block = data["block"];
     let block1 = !block;
 
-    chrome.storage.sync.set({"block": block1}, () => {
-      if(block1) {
+    chrome.storage.sync.set({ "block": block1 }, () => {
+      if (block1) {
         changeColor.style.backgroundColor = "#e8453c";
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
@@ -34,7 +34,7 @@ changeColor.addEventListener("click", async () => {
 // redundant - used for setting up before first click
 chrome.storage.sync.get("block", async ({ block }) => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if(block) {
+  if (block) {
     changeColor.style.backgroundColor = "#e8453c";
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
@@ -48,15 +48,21 @@ chrome.storage.sync.get("block", async ({ block }) => {
     });
   }
 });
-  
+
 // The body of this function will be executed as a content script inside the
 // current page
 function setBlock() {
-    originalBlock = document.getElementById("hot-network-questions");
-    if(originalBlock) { originalBlock.style.display = 'none'; }
+  let idBlockList = ["hot-network-questions", "related"];
+  for (var idStr of idBlockList) {
+    let originalBlock = document.getElementById(idStr);
+    if (originalBlock) { originalBlock.style.display = 'none'; }
+  }
 }
 
 function resetBlock() {
-    originalBlock = document.getElementById("hot-network-questions");
-    if(originalBlock) { originalBlock.style.display = 'block'; }
+  let idBlockList = ["hot-network-questions", "related"];
+  for (var idStr of idBlockList) {
+    let originalBlock = document.getElementById(idStr);
+    if (originalBlock) { originalBlock.style.display = 'block'; }
+  }
 }

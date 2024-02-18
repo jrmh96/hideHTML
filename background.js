@@ -1,10 +1,7 @@
-// background.js
-
 let block = true;
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.set({ block });
-  // console.log("Default block status set to " + block);
 });
 
 async function getCurrentTab() {
